@@ -3,7 +3,7 @@ from sqlalchemy import create_engine, text
 import pandas as pd
 import os
 
-db_connection_string = "mysql+pymysql://9cweyz5agb1iua6z88uv:pscale_pw_KQYpIdeVoxwDnXyPvYQTL1usXK3P3SMVYB2p7d7sELZ@aws.connect.psdb.cloud/htainsights?charset=utf8mb4"
+db_connection_string = os.environ['DB_CONNECTION_STRING']
 
 engine = create_engine(db_connection_string,
                        connect_args={"ssl": {
