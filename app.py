@@ -1,37 +1,19 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify
+from database import load_table_from_db
 
 app = Flask(__name__)
 
-DATABASE = [
-  {
-    'id': 890,
-    'therapy': 'Uplinza',
-    'disease': 'NMOSD',
-    'benefit': 'Unquantifiable'
-  },
-  {
-    'id': 670,
-    'therapy': 'Dupixent',
-    'disease': 'Asthma',
-    'benefit': 'None'
-  },
-  {
-    'id': 750,
-    'therapy': 'Rinvoq',
-    'disease': 'AD',
-    'benefit': 'Minor'
-  },
-  {
-    'id': 520,
-    'therapy': 'Vyvgart',
-    'disease': 'MG',
-    'benefit': 'Considerable'
-  }
-]
-
 @app.route('/')
-def hello_world():
-  return render_template('home.html', database=DATABASE, company="Pharmabase")
+def hello_pharmabase():
+  table = load_table_from_db("select * from gba")
+  return render_template('home.html',
+                         table=table,
+                         company="Pharmabase")
+
+@app.route('/api/table')
+def list_table():
+  table = load_table_from_db("select * from gba")
+  return jsonify(table)
 
 if __name__ == '__main__':
   app.run(host='0.0.0.0',debug=True)
