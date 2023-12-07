@@ -1,5 +1,5 @@
 from flask import Flask, render_template, jsonify, request
-from database import load_gba_dict_list_from_db, load_assessment_dict_from_db
+from database import load_gba_dict_list_from_db, load_assessment_dict_from_db, load_gba_dict_list_from_query
 
 app = Flask(__name__)
 
@@ -15,19 +15,12 @@ def search_hta_insights():
 @app.route("/htainsights/results", methods=['post'])
 def hta_insights():
   search_results = request.form
+  assessment_dicts = load_gba_dict_list_from_query(search_results)
+  if not assessment_dicts:
+    return "Not Found", 404
   return render_template("htainsightsresults.html",
-                         search_results=search_results)
-
-#@app.route("/htainsights/results", )
-#def hta_insights():
-#  gba_dict_list = load_gba_dict_list_from_db("SELECT * FROM gba")
-#  return render_template("htainsightsresults.html",
-#                         gba_dict_list=gba_dict_list)
-
-@app.route("/htainsights/results/api/table")
-def list_table():
-  gba_dict_list = load_gba_dict_list_from_db("SELECT * FROM gba")
-  return jsonify(gba_dict_list)
+                         search_results=search_results,
+                         assessment_dicts=assessment_dicts)
 
 @app.route("/htainsights/results/assessment/<id>")
 def show_assessment(id):

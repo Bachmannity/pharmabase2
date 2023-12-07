@@ -27,3 +27,13 @@ def load_assessment_dict_from_db(id):
       return None
     else:
       return dict_list[0]
+
+def load_gba_dict_list_from_query(search_results):
+  with engine.connect() as conn:
+    query = "SELECT * FROM gba WHERE therapy LIKE '" + str(search_results['therapy']) + "' OR disease LIKE '" + str(search_results['disease']) + "' OR benefit LIKE '" + str(search_results['benefit']) + "'"
+    df = pd.read_sql(query, conn)
+    dict_list = df.to_dict('records')
+    if len(dict_list) == 0:
+      return None
+    else:
+      return dict_list
