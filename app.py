@@ -5,8 +5,13 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello_pharmabase():
-  gba_dict_list = load_gba_dict_list_from_db("SELECT * FROM gba")
   return render_template("home.html",
+                          company="Pharmabase")
+  
+@app.route("/htainsights")
+def hta_insights():
+  gba_dict_list = load_gba_dict_list_from_db("SELECT * FROM gba")
+  return render_template("htainsights.html",
                          table=gba_dict_list,
                          company="Pharmabase")
 
@@ -14,6 +19,8 @@ def hello_pharmabase():
 def list_table():
   gba_dict_list = load_gba_dict_list_from_db("SELECT * FROM gba")
   return jsonify(gba_dict_list)
+
+
 
 @app.route("/assessment/<id>")
 def show_assessment(id):
