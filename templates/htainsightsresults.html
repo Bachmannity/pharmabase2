@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>HTA Insights</title>
+    {% include 'bootstrap.html' %}
+  </head>
+  <body>
+    {% include 'header.html' %}
+    <div class="container">
+      <h3 class="mt-2 mb-4">
+        HTA Insights!
+      </h3>
+      <div>
+        {% include'filterinput.html' %}
+      </div>
+      <div>
+        {% include'searchoutput.html' %}
+      </div>
+    </div>
+    {% include 'footer.html' %}
+  </body>
