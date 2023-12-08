@@ -1,5 +1,5 @@
 from flask import Flask, render_template, jsonify, request
-from database import load_gba_dict_list_from_db, load_assessment_dict_from_db, load_gba_dict_list_from_query
+from database import load_assessment_dict_from_db, load_gba_dict_list_from_query
 
 app = Flask(__name__)
 
@@ -13,7 +13,7 @@ def search_hta_insights():
   return render_template("htainsightssearch.html")
 
 @app.route("/htainsights/results", methods=['post'])
-def hta_insights():
+def hta_insights_results():
   search_results = request.form
   assessment_dicts = load_gba_dict_list_from_query(search_results)
   if not assessment_dicts:
